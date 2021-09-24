@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  userapi:
+    image: userapiservice
+    build:
+      context: .
+      dockerfile: UserAPI/Dockerfile
+    #environment:
+    #  - ConnectionString__UserDB="Server=localhost,49173;Database=masterv1;User Id=sa;Password=Your_password123"
+    ports:
+      - "8085:80"
+  sqlserverv13:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    extra_hosts:
+      - "localhost:192.168.65.2"
+    container_name: sqlserverv13
+    hostname: sqlserverv13
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Your_password123"
+    ports:
+      - "49173:1433"
